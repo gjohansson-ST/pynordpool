@@ -67,6 +67,7 @@ exclude = ["examples"]
 # results.
 platform = "linux"
 python_version = "3.11"
+exclude = ['examples']
 
 # show error messages from unrelated files
 follow_imports = "normal"
