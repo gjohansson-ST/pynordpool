@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import datetime
-from enum import IntEnum
 from typing import Any
 
 
@@ -19,7 +18,7 @@ class DeliveryPeriodData:
     block_prices: list[DeliveryPeriodBlockPrices]
     currency: str
     exchange_rate: float
-    area_average: dict[str, dict[str, float]]
+    area_average: dict[str, float]
 
 
 @dataclass

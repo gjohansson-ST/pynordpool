@@ -3,16 +3,15 @@
 from __future__ import annotations
 
 import asyncio
-from typing import Any
 from datetime import datetime
-from aiozoneinfo import async_get_time_zone
+from typing import Any
 
 from aiohttp import ClientResponse, ClientSession, ClientTimeout
 
-from .const import API, LOGGER, DEFAULT_TIMEOUT, HTTP_AUTH_FAILED_STATUS_CODES, Currency
+from .const import API, DEFAULT_TIMEOUT, HTTP_AUTH_FAILED_STATUS_CODES, LOGGER, Currency
 from .exceptions import AuthenticationError, NordpoolError
-from .model import DeliveryPeriodEntry, DeliveryPeriodBlockPrices, DeliveryPeriodData
-from .util import parse_utc_datetime, parse_cet_datetime
+from .model import DeliveryPeriodBlockPrices, DeliveryPeriodData, DeliveryPeriodEntry
+from .util import parse_cet_datetime, parse_utc_datetime
 
 
 class NordpoolClient:
@@ -35,7 +34,7 @@ class NordpoolClient:
         currency: Currency,
         areas: list[str],
         market: str = "DayAhead",
-    ) -> dict[str, Any]:
+    ) -> DeliveryPeriodData:
         """Return info on delivery period data."""
         _date = datetime.strftime(date, "%Y-%m-%d")
         _currency = currency.value
@@ -72,7 +71,7 @@ class NordpoolClient:
                 )
             )
 
-        area_averages:dict[str,float] = {}
+        area_averages: dict[str, float] = {}
         for area_average in data["areaAverages"]:
             area_averages[area_average["areaCode"]] = area_average["price"]
 
@@ -85,7 +84,6 @@ class NordpoolClient:
             currency=data["currency"],
             exchange_rate=data["exchangeRate"],
             area_average=area_averages,
-
         )
 
     async def _get(
