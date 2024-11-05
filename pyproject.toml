@@ -58,12 +58,16 @@ show_missing = true
 plugins = ["covdefaults"]
 source = ["pynordpool"]
 
+[tool.ruff]
+exclude = ["examples"]
+
 [tool.mypy]
 # Specify the target platform details in config, so your developers are
 # free to run mypy on Windows, Linux, or macOS and get consistent
 # results.
 platform = "linux"
 python_version = "3.11"
+exclude = ['examples']
 
 # show error messages from unrelated files
 follow_imports = "normal"
@@ -91,11 +95,10 @@ warn_unused_ignores = true
 
 [tool.pylint.MASTER]
 ignore = [
-  "tests"
+  "tests",
+  "examples"
 ]
-extension-pkg-whitelist = [
-  "lxml"
-]
+ignore-paths = "examples.*"
 
 [tool.pylint.BASIC]
 good-names = [

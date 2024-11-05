@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import logging
 from enum import StrEnum
-import datetime as dt
 
 API = "https://dataportal-api.nordpoolgroup.com/api"
 
