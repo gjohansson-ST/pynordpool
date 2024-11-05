@@ -1,0 +1,159 @@
+{
+  "deliveryDateCET": "2024-11-05",
+  "version": 3,
+  "updatedAt": "2024-11-04T12:15:03.8832404Z",
+  "deliveryAreas": ["SE3"],
+  "market": "DayAhead",
+  "multiAreaEntries": [
+    {
+      "deliveryStart": "2024-11-04T23:00:00Z",
+      "deliveryEnd": "2024-11-05T00:00:00Z",
+      "entryPerArea": { "SE3": 21.54 }
+    },
+    {
+      "deliveryStart": "2024-11-05T00:00:00Z",
+      "deliveryEnd": "2024-11-05T01:00:00Z",
+      "entryPerArea": { "SE3": 6.56 }
+    },
+    {
+      "deliveryStart": "2024-11-05T01:00:00Z",
+      "deliveryEnd": "2024-11-05T02:00:00Z",
+      "entryPerArea": { "SE3": 6.35 }
+    },
+    {
+      "deliveryStart": "2024-11-05T02:00:00Z",
+      "deliveryEnd": "2024-11-05T03:00:00Z",
+      "entryPerArea": { "SE3": 5.3 }
+    },
+    {
+      "deliveryStart": "2024-11-05T03:00:00Z",
+      "deliveryEnd": "2024-11-05T04:00:00Z",
+      "entryPerArea": { "SE3": 5.55 }
+    },
+    {
+      "deliveryStart": "2024-11-05T04:00:00Z",
+      "deliveryEnd": "2024-11-05T05:00:00Z",
+      "entryPerArea": { "SE3": 38.94 }
+    },
+    {
+      "deliveryStart": "2024-11-05T05:00:00Z",
+      "deliveryEnd": "2024-11-05T06:00:00Z",
+      "entryPerArea": { "SE3": 85.59 }
+    },
+    {
+      "deliveryStart": "2024-11-05T06:00:00Z",
+      "deliveryEnd": "2024-11-05T07:00:00Z",
+      "entryPerArea": { "SE3": 120.8 }
+    },
+    {
+      "deliveryStart": "2024-11-05T07:00:00Z",
+      "deliveryEnd": "2024-11-05T08:00:00Z",
+      "entryPerArea": { "SE3": 115.68 }
+    },
+    {
+      "deliveryStart": "2024-11-05T08:00:00Z",
+      "deliveryEnd": "2024-11-05T09:00:00Z",
+      "entryPerArea": { "SE3": 98.82 }
+    },
+    {
+      "deliveryStart": "2024-11-05T09:00:00Z",
+      "deliveryEnd": "2024-11-05T10:00:00Z",
+      "entryPerArea": { "SE3": 88.6 }
+    },
+    {
+      "deliveryStart": "2024-11-05T10:00:00Z",
+      "deliveryEnd": "2024-11-05T11:00:00Z",
+      "entryPerArea": { "SE3": 79.67 }
+    },
+    {
+      "deliveryStart": "2024-11-05T11:00:00Z",
+      "deliveryEnd": "2024-11-05T12:00:00Z",
+      "entryPerArea": { "SE3": 79.47 }
+    },
+    {
+      "deliveryStart": "2024-11-05T12:00:00Z",
+      "deliveryEnd": "2024-11-05T13:00:00Z",
+      "entryPerArea": { "SE3": 81.57 }
+    },
+    {
+      "deliveryStart": "2024-11-05T13:00:00Z",
+      "deliveryEnd": "2024-11-05T14:00:00Z",
+      "entryPerArea": { "SE3": 89.52 }
+    },
+    {
+      "deliveryStart": "2024-11-05T14:00:00Z",
+      "deliveryEnd": "2024-11-05T15:00:00Z",
+      "entryPerArea": { "SE3": 108.15 }
+    },
+    {
+      "deliveryStart": "2024-11-05T15:00:00Z",
+      "deliveryEnd": "2024-11-05T16:00:00Z",
+      "entryPerArea": { "SE3": 156.05 }
+    },
+    {
+      "deliveryStart": "2024-11-05T16:00:00Z",
+      "deliveryEnd": "2024-11-05T17:00:00Z",
+      "entryPerArea": { "SE3": 215.86 }
+    },
+    {
+      "deliveryStart": "2024-11-05T17:00:00Z",
+      "deliveryEnd": "2024-11-05T18:00:00Z",
+      "entryPerArea": { "SE3": 156.34 }
+    },
+    {
+      "deliveryStart": "2024-11-05T18:00:00Z",
+      "deliveryEnd": "2024-11-05T19:00:00Z",
+      "entryPerArea": { "SE3": 86.92 }
+    },
+    {
+      "deliveryStart": "2024-11-05T19:00:00Z",
+      "deliveryEnd": "2024-11-05T20:00:00Z",
+      "entryPerArea": { "SE3": 71.78 }
+    },
+    {
+      "deliveryStart": "2024-11-05T20:00:00Z",
+      "deliveryEnd": "2024-11-05T21:00:00Z",
+      "entryPerArea": { "SE3": 68.4 }
+    },
+    {
+      "deliveryStart": "2024-11-05T21:00:00Z",
+      "deliveryEnd": "2024-11-05T22:00:00Z",
+      "entryPerArea": { "SE3": 44.87 }
+    },
+    {
+      "deliveryStart": "2024-11-05T22:00:00Z",
+      "deliveryEnd": "2024-11-05T23:00:00Z",
+      "entryPerArea": { "SE3": 24.84 }
+    }
+  ],
+  "blockPriceAggregates": [
+    {
+      "blockName": "Off-peak 1",
+      "deliveryStart": "2024-11-04T23:00:00Z",
+      "deliveryEnd": "2024-11-05T07:00:00Z",
+      "averagePricePerArea": {
+        "SE3": { "average": 36.33, "min": 5.3, "max": 120.8 }
+      }
+    },
+    {
+      "blockName": "Peak",
+      "deliveryStart": "2024-11-05T07:00:00Z",
+      "deliveryEnd": "2024-11-05T19:00:00Z",
+      "averagePricePerArea": {
+        "SE3": { "average": 113.05, "min": 79.47, "max": 215.86 }
+      }
+    },
+    {
+      "blockName": "Off-peak 2",
+      "deliveryStart": "2024-11-05T19:00:00Z",
+      "deliveryEnd": "2024-11-05T23:00:00Z",
+      "averagePricePerArea": {
+        "SE3": { "average": 52.47, "min": 24.84, "max": 71.78 }
+      }
+    }
+  ],
+  "currency": "EUR",
+  "exchangeRate": 1,
+  "areaStates": [{ "state": "Final", "areas": ["SE3"] }],
+  "areaAverages": [{ "areaCode": "SE3", "price": 77.38 }]
+}
