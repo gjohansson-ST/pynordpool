@@ -94,7 +94,8 @@ warn_unused_ignores = true
 
 [tool.pylint.MASTER]
 ignore = [
-  "tests"
+  "tests",
+  "examples"
 ]
 extension-pkg-whitelist = [
   "lxml"
