@@ -7,8 +7,8 @@ from pynordpool import NordpoolClient, Currency
 
 async def main(loop):
     async with aiohttp.ClientSession(loop=loop) as session:
-        setup = NordpoolClient(session)
-        output = await setup.async_get_delivery_period(
+        client = NordpoolClient(session)
+        output = await client.async_get_delivery_period(
             datetime.datetime.now(), Currency.EUR, ["SE3"]
         )
         print(output)
