@@ -9,7 +9,7 @@ from typing import Any
 from aiohttp import ClientResponse, ClientSession, ClientTimeout
 
 from .const import API, DEFAULT_TIMEOUT, HTTP_AUTH_FAILED_STATUS_CODES, LOGGER, Currency
-from .exceptions import AuthenticationError, NordpoolError
+from .exceptions import NordpoolError
 from .model import DeliveryPeriodBlockPrices, DeliveryPeriodData, DeliveryPeriodEntry
 from .util import parse_cet_datetime, parse_utc_datetime
 
@@ -96,8 +96,6 @@ class NordpoolClient:
                 path, params=params, timeout=self._timeout
             ) as resp:
                 return await self._response(resp)
-        except AuthenticationError:
-            raise
         except Exception as error:
             LOGGER.debug(
                 "Retry %d on path %s from error %s", 4 - retry, path, str(error)
@@ -112,7 +110,7 @@ class NordpoolClient:
         LOGGER.debug("Response %s", resp.__dict__)
         LOGGER.debug("Response status %s", resp.status)
         if resp.status in HTTP_AUTH_FAILED_STATUS_CODES:
-            raise AuthenticationError("No access")
+            raise NordpoolError("No access")
         if resp.status != 200:
             error = await resp.text()
             raise NordpoolError(f"API error: {error}, {resp.__dict__}")
