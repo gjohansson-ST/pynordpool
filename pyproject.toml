@@ -28,7 +28,6 @@ packages = [
 [tool.poetry.dependencies]
 python = "^3.11"
 aiohttp = ">=3.9.2"
-aiozoneinfo = ">=0.2.1"
 
 [tool.poetry.group.dev.dependencies]
 aresponses = "3.0.0"
