@@ -11,7 +11,7 @@ from aiohttp import ClientResponse, ClientSession, ClientTimeout
 from .const import API, DEFAULT_TIMEOUT, HTTP_AUTH_FAILED_STATUS_CODES, LOGGER, Currency
 from .exceptions import AuthenticationError, NordpoolError
 from .model import DeliveryPeriodBlockPrices, DeliveryPeriodData, DeliveryPeriodEntry
-from .util import parse_cet_datetime, parse_utc_datetime
+from .util import parse_datetime
 
 
 class NordpoolClient:
@@ -55,8 +55,8 @@ class NordpoolClient:
         for entry in data["multiAreaEntries"]:
             entries.append(
                 DeliveryPeriodEntry(
-                    start=await parse_utc_datetime(entry["deliveryStart"]),
-                    end=await parse_utc_datetime(entry["deliveryEnd"]),
+                    start=await parse_datetime(entry["deliveryStart"]),
+                    end=await parse_datetime(entry["deliveryEnd"]),
                     entry=entry["entryPerArea"],
                 )
             )
@@ -65,8 +65,8 @@ class NordpoolClient:
             block_prices.append(
                 DeliveryPeriodBlockPrices(
                     name=block["blockName"],
-                    start=await parse_utc_datetime(block["deliveryStart"]),
-                    end=await parse_utc_datetime(block["deliveryEnd"]),
+                    start=await parse_datetime(block["deliveryStart"]),
+                    end=await parse_datetime(block["deliveryEnd"]),
                     average=block["averagePricePerArea"],
                 )
             )
@@ -78,7 +78,7 @@ class NordpoolClient:
         return DeliveryPeriodData(
             raw=data,
             requested_date=data["deliveryDateCET"],
-            updated_at=await parse_cet_datetime(data["updatedAt"]),
+            updated_at=await parse_datetime(data["updatedAt"]),
             entries=entries,
             block_prices=block_prices,
             currency=data["currency"],

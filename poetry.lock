@@ -137,20 +137,6 @@ files = [
 frozenlist = ">=1.1.0"
 
 [[package]]
-name = "aiozoneinfo"
-version = "0.2.1"
-description = "Tools to fetch zoneinfo with asyncio"
-optional = false
-python-versions = "<4.0,>=3.8"
-files = [
-    {file = "aiozoneinfo-0.2.1-py3-none-any.whl", hash = "sha256:04579f855f030cd0edb1758659c513142ef1aaf7fcc97b59eb2262ed0c453cce"},
-    {file = "aiozoneinfo-0.2.1.tar.gz", hash = "sha256:457e2c665a2c7e093119efb87cc5e0da29e6f59aac504a544bec822c5be1cb6b"},
-]
-
-[package.dependencies]
-tzdata = ">=2024.1"
-
-[[package]]
 name = "annotated-types"
 version = "0.7.0"
 description = "Reusable constraint types to use with typing.Annotated"
@@ -1959,17 +1945,6 @@ files = [
 ]
 
 [[package]]
-name = "tzdata"
-version = "2024.2"
-description = "Provider of IANA time zone data"
-optional = false
-python-versions = ">=2"
-files = [
-    {file = "tzdata-2024.2-py2.py3-none-any.whl", hash = "sha256:a48093786cdcde33cad18c2555e8532f34422074448fbc874186f0abd79565cd"},
-    {file = "tzdata-2024.2.tar.gz", hash = "sha256:7d85cc416e9382e69095b7bdf4afd9e3880418a2413feec7069d533d6b4e31cc"},
-]
-
-[[package]]
 name = "urllib3"
 version = "2.2.3"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
@@ -2123,4 +2098,4 @@ propcache = ">=0.2.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "6669f3f47ecfaa202ae4236bbb13eb7dac40bdc68efb4db9ff91341c346d9c43"
+content-hash = "1586b80429fa15543d5cd0d236c377b7b7a5dbcd01ca213450df942aaf92acce"
