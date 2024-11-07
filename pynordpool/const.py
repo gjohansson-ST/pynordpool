@@ -1,4 +1,4 @@
-"""Constants for Nordpool."""
+"""Constants for Nord Pool."""
 
 from __future__ import annotations
 

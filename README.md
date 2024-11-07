@@ -1,5 +1,5 @@
 # pynordpool
-python module for communicating with Nordpool
+python module for communicating with Nord Pool
 
 Development and testing done with 3.11
 
@@ -10,10 +10,10 @@ Development and testing done with 3.11
 Hourly rates from provided date
 
 ```python
-from pynordpool import NordpoolClient, Currency
+from pynordpool import NordPoolClient, Currency
 
 async with aiohttp.ClientSession(loop=loop) as session:
-    client = NordpoolClient(session)
+    client = NordPoolClient(session)
     output = await client.async_get_delivery_period(
         datetime.datetime.now(), Currency.EUR, ["SE3"]
     )

@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "pynordpool"
 version = "0.0.0"
-description = "Retrieve values from API at Nordpool."
+description = "Retrieve values from API at Nord Pool."
 authors = [
     "G Johansson <goran.johansson@shiftit.se>",
 ]
@@ -11,7 +11,7 @@ readme = "README.md"
 homepage = "https://github.com/gjohansson-ST/pynordpool"
 repository = "https://github.com/gjohansson-ST/pynordpool"
 documentation = "https://github.com/gjohansson-ST/pynordpool"
-keywords = ["nordpool", "api", "async", "client"]
+keywords = ["nordpool", "Nord Pool", "api", "async", "client"]
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Intended Audience :: Developers",
