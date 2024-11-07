@@ -1,7 +1,5 @@
 # pynordpool
-python module for communicating with Nord Pool
-
-Development and testing done with 3.11
+python module for communicating with [Nord Pool](https://data.nordpoolgroup.com/auction/day-ahead/prices)
 
 ## Code example
 
