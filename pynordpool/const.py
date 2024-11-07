@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import datetime as dt
 import logging
 from enum import StrEnum
 
@@ -12,7 +11,6 @@ LOGGER = logging.getLogger(__name__)
 
 DEFAULT_TIMEOUT = 8
 HTTP_AUTH_FAILED_STATUS_CODES = {401, 403}
-DEFAULT_TIME_ZONE: dt.tzinfo = dt.UTC
 
 AREAS = {
     # Baltics

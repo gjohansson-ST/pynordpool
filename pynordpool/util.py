@@ -4,8 +4,6 @@ from __future__ import annotations
 
 import datetime as dt
 
-CET = "Europe/Stockholm"
-
 
 async def parse_datetime(dt_str: str) -> dt.datetime:
     """Parse a string and return a datetime.datetime.
