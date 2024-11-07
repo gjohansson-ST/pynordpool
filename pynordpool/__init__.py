@@ -23,8 +23,11 @@ __all__ = [
     "DeliveryPeriodBlockPrices",
     "DeliveryPeriodData",
     "DeliveryPeriodEntry",
+    "NordPoolAuthenticationError",
     "NordPoolClient",
+    "NordPoolConnectionError",
     "NordPoolError",
+    "NordPoolResponseError",
 ]
 
 
