@@ -9,3 +9,15 @@ class NordPoolError(Exception):
     def __init__(self, *args: Any) -> None:
         """Initialize the exception."""
         Exception.__init__(self, *args)
+
+
+class NordPoolConnectionError(NordPoolError):
+    """Connection error from Nord Pool api."""
+
+
+class NordPoolResponseError(NordPoolError):
+    """Response error from Nord Pool api."""
+
+
+class NordPoolAuthenticationError(NordPoolError):
+    """Response error from Nord Pool api."""

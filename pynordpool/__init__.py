@@ -9,7 +9,12 @@ from typing import Any
 from aiohttp import ClientResponse, ClientSession, ClientTimeout
 
 from .const import API, DEFAULT_TIMEOUT, HTTP_AUTH_FAILED_STATUS_CODES, LOGGER, Currency
-from .exceptions import NordPoolError
+from .exceptions import (
+    NordPoolAuthenticationError,
+    NordPoolConnectionError,
+    NordPoolError,
+    NordPoolResponseError,
+)
 from .model import DeliveryPeriodBlockPrices, DeliveryPeriodData, DeliveryPeriodEntry
 from .util import parse_datetime
 
@@ -96,6 +101,15 @@ class NordPoolClient:
                 path, params=params, timeout=self._timeout
             ) as resp:
                 return await self._response(resp)
+        except NordPoolAuthenticationError as error:
+            LOGGER.debug("Authentication error %s", str(error))
+            raise
+        except NordPoolConnectionError as error:
+            LOGGER.debug("Connection error %s", str(error))
+            raise
+        except NordPoolResponseError as error:
+            LOGGER.debug("Response error %s", str(error))
+            raise
         except Exception as error:
             LOGGER.debug(
                 "Retry %d on path %s from error %s", 4 - retry, path, str(error)
@@ -103,20 +117,20 @@ class NordPoolClient:
             if retry > 0:
                 await asyncio.sleep(7)
                 return await self._get(path, params, retry - 1)
-            raise
+            raise NordPoolError from error
 
     async def _response(self, resp: ClientResponse) -> dict[str, Any]:
         """Return response from call."""
         LOGGER.debug("Response %s", resp.__dict__)
         LOGGER.debug("Response status %s", resp.status)
         if resp.status in HTTP_AUTH_FAILED_STATUS_CODES:
-            raise NordPoolError("No access")
+            raise NordPoolAuthenticationError("No access")
         if resp.status != 200:
             error = await resp.text()
-            raise NordPoolError(f"API error: {error}, {resp.__dict__}")
+            raise NordPoolConnectionError(f"API error: {error}, {resp.__dict__}")
         try:
             response: dict[str, Any] = await resp.json()
         except Exception as err:
             error = await resp.text()
-            raise NordPoolError(f"Could not return json {err}:{error}") from err
+            raise NordPoolResponseError(f"Could not return json {err}:{error}") from err
         return response
