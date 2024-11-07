@@ -2,7 +2,7 @@
   "name": "pynordpool",
   "version": "0.0.0",
   "private": true,
-  "description": "Retrieve values from API at Nordpool",
+  "description": "Retrieve values from API at Nord Pool",
   "scripts": {
     "prettier": "prettier --write **/*.{json,js,md,yml,yaml}"
   },

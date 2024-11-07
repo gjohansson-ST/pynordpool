@@ -1,4 +1,4 @@
-"""Utils for Nordpool."""
+"""Utils for Nord Pool."""
 
 from __future__ import annotations
 

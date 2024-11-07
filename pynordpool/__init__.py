@@ -1,4 +1,4 @@
-"""Python API for Nordpool."""
+"""Python API for Nord Pool."""
 
 from __future__ import annotations
 
@@ -9,18 +9,18 @@ from typing import Any
 from aiohttp import ClientResponse, ClientSession, ClientTimeout
 
 from .const import API, DEFAULT_TIMEOUT, HTTP_AUTH_FAILED_STATUS_CODES, LOGGER, Currency
-from .exceptions import NordpoolError
+from .exceptions import NordPoolError
 from .model import DeliveryPeriodBlockPrices, DeliveryPeriodData, DeliveryPeriodEntry
 from .util import parse_datetime
 
 
-class NordpoolClient:
-    """Nordpool client."""
+class NordPoolClient:
+    """Nord Pool client."""
 
     def __init__(
         self, session: ClientSession | None = None, timeout: int = DEFAULT_TIMEOUT
     ) -> None:
-        """Initialize Nordpool Client.
+        """Initialize Nord Pool Client.
 
         session: aiohttp.ClientSession or None to create a new session.
         timeout: Timeout for API calls. Default is 8 seconds.
@@ -89,7 +89,7 @@ class NordpoolClient:
     async def _get(
         self, path: str, params: dict[str, Any], retry: int = 3
     ) -> dict[str, Any]:
-        """Make GET api call to Nordpool api."""
+        """Make GET api call to Nord Pool api."""
         LOGGER.debug("Attempting get with path %s and parameters %s", path, params)
         try:
             async with self._session.get(
@@ -110,13 +110,13 @@ class NordpoolClient:
         LOGGER.debug("Response %s", resp.__dict__)
         LOGGER.debug("Response status %s", resp.status)
         if resp.status in HTTP_AUTH_FAILED_STATUS_CODES:
-            raise NordpoolError("No access")
+            raise NordPoolError("No access")
         if resp.status != 200:
             error = await resp.text()
-            raise NordpoolError(f"API error: {error}, {resp.__dict__}")
+            raise NordPoolError(f"API error: {error}, {resp.__dict__}")
         try:
             response: dict[str, Any] = await resp.json()
         except Exception as err:
             error = await resp.text()
-            raise NordpoolError(f"Could not return json {err}:{error}") from err
+            raise NordPoolError(f"Could not return json {err}:{error}") from err
         return response

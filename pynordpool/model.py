@@ -1,4 +1,4 @@
-"""Data classes for Sensibo."""
+"""Data classes for Nord Pool."""
 
 from __future__ import annotations
 

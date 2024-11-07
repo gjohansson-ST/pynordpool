@@ -1,17 +1,22 @@
+"""Example usage of the library."""
+
 import asyncio
+import datetime
 
 import aiohttp
-import datetime
-from pynordpool import NordpoolClient, Currency
+
+from pynordpool import NordPoolClient
+from pynordpool.const import Currency
 
 
-async def main(loop):
+async def main(loop: asyncio.AbstractEventLoop) -> None:
+    """Print the delivery period."""
     async with aiohttp.ClientSession(loop=loop) as session:
-        client = NordpoolClient(session)
+        client = NordPoolClient(session)
         output = await client.async_get_delivery_period(
             datetime.datetime.now(), Currency.EUR, ["SE3"]
         )
-        print(output)
+        print(output)  # noqa: T201
 
 
 loop = asyncio.get_event_loop()

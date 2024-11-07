@@ -1,10 +1,10 @@
-"""Exceptions for Sensibo."""
+"""Exceptions for Nord Pool."""
 
 from typing import Any
 
 
-class NordpoolError(Exception):
-    """Error from Nordpool api."""
+class NordPoolError(Exception):
+    """Error from Nord Pool api."""
 
     def __init__(self, *args: Any) -> None:
         """Initialize the exception."""
