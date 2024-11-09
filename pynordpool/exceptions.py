@@ -19,5 +19,9 @@ class NordPoolResponseError(NordPoolError):
     """Response error from Nord Pool api."""
 
 
+class NordPoolEmptyResponseError(NordPoolError):
+    """Empty response error from Nord Pool api."""
+
+
 class NordPoolAuthenticationError(NordPoolError):
     """Response error from Nord Pool api."""
