@@ -118,6 +118,9 @@ class NordPoolClient:
         except NordPoolAuthenticationError as error:
             LOGGER.debug("Authentication error %s", str(error))
             raise
+        except NordPoolEmptyResponseError as error:
+            LOGGER.debug("Empty response error %s", str(error))
+            raise
         except NordPoolConnectionError as error:
             LOGGER.debug("Connection error %s", str(error))
             raise
