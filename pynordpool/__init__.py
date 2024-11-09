@@ -8,7 +8,14 @@ from typing import Any
 
 from aiohttp import ClientResponse, ClientSession, ClientTimeout
 
-from .const import API, DEFAULT_TIMEOUT, HTTP_AUTH_FAILED_STATUS_CODES, LOGGER, Currency
+from .const import (
+    API,
+    AREAS,
+    DEFAULT_TIMEOUT,
+    HTTP_AUTH_FAILED_STATUS_CODES,
+    LOGGER,
+    Currency,
+)
 from .exceptions import (
     NordPoolAuthenticationError,
     NordPoolConnectionError,
@@ -19,6 +26,7 @@ from .model import DeliveryPeriodBlockPrices, DeliveryPeriodData, DeliveryPeriod
 from .util import parse_datetime
 
 __all__ = [
+    "AREAS",
     "Currency",
     "DeliveryPeriodBlockPrices",
     "DeliveryPeriodData",
