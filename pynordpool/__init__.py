@@ -12,6 +12,7 @@ from .const import API, DEFAULT_TIMEOUT, HTTP_AUTH_FAILED_STATUS_CODES, LOGGER, 
 from .exceptions import (
     NordPoolAuthenticationError,
     NordPoolConnectionError,
+    NordPoolEmptyResponseError,
     NordPoolError,
     NordPoolResponseError,
 )
@@ -26,6 +27,7 @@ __all__ = [
     "NordPoolAuthenticationError",
     "NordPoolClient",
     "NordPoolConnectionError",
+    "NordPoolEmptyResponseError",
     "NordPoolError",
     "NordPoolResponseError",
 ]
@@ -137,6 +139,8 @@ class NordPoolClient:
         LOGGER.debug("Response status %s", resp.status)
         if resp.status in HTTP_AUTH_FAILED_STATUS_CODES:
             raise NordPoolAuthenticationError("No access")
+        if resp.status == 204:
+            raise NordPoolEmptyResponseError("Empty response")
         if resp.status != 200:
             error = await resp.text()
             raise NordPoolConnectionError(f"API error: {error}, {resp.__dict__}")
