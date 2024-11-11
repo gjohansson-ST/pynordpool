@@ -6,7 +6,14 @@ import asyncio
 from datetime import datetime
 from typing import Any
 
-from aiohttp import ClientResponse, ClientSession, ClientTimeout
+from aiohttp import (
+    ClientError,
+    ClientResponse,
+    ClientResponseError,
+    ClientSession,
+    ClientTimeout,
+    RequestInfo,
+)
 
 from .const import (
     API,
@@ -122,20 +129,48 @@ class NordPoolClient:
             async with self._session.get(
                 path, params=params, timeout=self._timeout
             ) as resp:
+                resp.raise_for_status()
+                if resp.status == 204:
+                    raise NordPoolEmptyResponseError(
+                        "Status 204, Empty response from server"
+                    )
+                if resp.status != 200 and resp.status < 400:
+                    error = await resp.text()
+                    raise NordPoolResponseError(
+                        request_info=RequestInfo(resp.url, resp.method, resp.headers),
+                        history=(resp,),
+                        status=resp.status,
+                        message=error,
+                    )
                 return await self._response(resp)
-        except NordPoolAuthenticationError as error:
-            LOGGER.debug("Authentication error %s", str(error))
-            raise
         except NordPoolEmptyResponseError as error:
             LOGGER.debug("Empty response error %s", str(error))
             raise
-        except NordPoolConnectionError as error:
-            LOGGER.debug("Connection error %s", str(error))
-            raise
         except NordPoolResponseError as error:
             LOGGER.debug("Response error %s", str(error))
+            if retry > 0:
+                await asyncio.sleep(7)
+                return await self._get(path, params, retry - 1)
             raise
-        except Exception as error:
+        except ClientResponseError as error:
+            LOGGER.debug("Empty response error %s", str(error))
+            if resp.status in HTTP_AUTH_FAILED_STATUS_CODES:
+                raise NordPoolAuthenticationError("No access") from error
+            if resp.status >= 500:
+                raise NordPoolConnectionError("Internal server error") from error
+            raise NordPoolResponseError(
+                request_info=RequestInfo(resp.url, resp.method, resp.headers),
+                history=(resp,),
+                status=resp.status,
+                message=str(error),
+            ) from error
+        except NordPoolConnectionError as error:
+            LOGGER.debug("Connection error %s", str(error))
+            if retry > 0:
+                await asyncio.sleep(7)
+                return await self._get(path, params, retry - 1)
+            raise
+        except ClientError as error:
             LOGGER.debug(
                 "Retry %d on path %s from error %s", 4 - retry, path, str(error)
             )
@@ -148,16 +183,5 @@ class NordPoolClient:
         """Return response from call."""
         LOGGER.debug("Response %s", resp.__dict__)
         LOGGER.debug("Response status %s", resp.status)
-        if resp.status in HTTP_AUTH_FAILED_STATUS_CODES:
-            raise NordPoolAuthenticationError("No access")
-        if resp.status == 204:
-            raise NordPoolEmptyResponseError("Empty response")
-        if resp.status != 200:
-            error = await resp.text()
-            raise NordPoolConnectionError(f"API error: {error}, {resp.__dict__}")
-        try:
-            response: dict[str, Any] = await resp.json()
-        except Exception as err:
-            error = await resp.text()
-            raise NordPoolResponseError(f"Could not return json {err}:{error}") from err
+        response: dict[str, Any] = await resp.json()
         return response
