@@ -78,6 +78,9 @@ class NordPoolClient:
         )
         data = await self._get(API + "/DayAheadPrices", params)
 
+        if not data or "multiAreaEntries" not in data:
+            raise NordPoolEmptyResponseError("Empty response")
+
         entries = []
         for entry in data["multiAreaEntries"]:
             entries.append(
