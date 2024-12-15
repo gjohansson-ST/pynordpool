@@ -23,7 +23,12 @@ from .exceptions import (
     NordPoolError,
     NordPoolResponseError,
 )
-from .model import DeliveryPeriodBlockPrices, DeliveryPeriodData, DeliveryPeriodEntry
+from .model import (
+    DeliveryPeriodBlockPrices,
+    DeliveryPeriodData,
+    DeliveryPeriodEntry,
+    DeliveryPeriodsData,
+)
 from .util import parse_datetime
 
 __all__ = [
@@ -31,6 +36,7 @@ __all__ = [
     "Currency",
     "DeliveryPeriodBlockPrices",
     "DeliveryPeriodData",
+    "DeliveryPeriodsData",
     "DeliveryPeriodEntry",
     "NordPoolAuthenticationError",
     "NordPoolClient",
@@ -54,6 +60,23 @@ class NordPoolClient:
         """
         self._session = session if session else ClientSession()
         self._timeout = ClientTimeout(total=timeout)
+
+    async def async_get_delivery_periods(
+        self,
+        dates: list[datetime],
+        currency: Currency,
+        areas: list[str],
+        market: str = "DayAhead",
+    ) -> DeliveryPeriodsData:
+        """Return info on multiple delivery periods data."""
+        raw_data: dict[str, Any] = {}
+        data: list[DeliveryPeriodData] = []
+        for date in dates:
+            _data = await self.async_get_delivery_period(date, currency, areas, market)
+            data.append(_data)
+            raw_data[_data.raw["deliveryDateCET"]] = _data.raw
+
+        return DeliveryPeriodsData(raw=raw_data, entries=data)
 
     async def async_get_delivery_period(
         self,

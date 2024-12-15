@@ -8,6 +8,14 @@ from typing import Any
 
 
 @dataclass
+class DeliveryPeriodsData:
+    """Dataclass for multiple Delivery Periods data."""
+
+    raw: dict[str, Any]
+    entries: list[DeliveryPeriodData]
+
+
+@dataclass
 class DeliveryPeriodData:
     """Dataclass for Delivery Period data."""
 
