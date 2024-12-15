@@ -1,7 +1,7 @@
 """Example usage of the library."""
 
 import asyncio
-import datetime
+from datetime import datetime, timedelta
 
 import aiohttp
 
@@ -14,9 +14,13 @@ async def main(loop: asyncio.AbstractEventLoop) -> None:
     async with aiohttp.ClientSession(loop=loop) as session:
         client = NordPoolClient(session)
         output = await client.async_get_delivery_period(
-            datetime.datetime.now(), Currency.EUR, ["SE3"]
+            datetime.now(), Currency.EUR, ["SE3"]
+        )
+        output2 = await client.async_get_delivery_periods(
+            [datetime.now(), datetime.now() + timedelta(days=1)], Currency.EUR, ["SE3"]
         )
         print(output)  # noqa: T201
+        print(output2)  # noqa: T201
 
 
 loop = asyncio.get_event_loop()
