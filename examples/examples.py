@@ -5,8 +5,7 @@ from datetime import datetime, timedelta
 
 import aiohttp
 
-from pynordpool import NordPoolClient
-from pynordpool.const import Currency
+from pynordpool import Currency, NordPoolClient
 
 
 async def main(loop: asyncio.AbstractEventLoop) -> None:
