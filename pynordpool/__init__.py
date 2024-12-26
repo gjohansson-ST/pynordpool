@@ -72,7 +72,30 @@ class NordPoolClient:
         raw_data: dict[str, Any] = {}
         data: list[DeliveryPeriodData] = []
         for date in dates:
-            _data = await self.async_get_delivery_period(date, currency, areas, market)
+            try:
+                _data = await self.async_get_delivery_period(
+                    date, currency, areas, market
+                )
+            except NordPoolEmptyResponseError as error:
+                LOGGER.debug(
+                    "Empty response error %s with date %s, currency %s, areas %s and market %s",
+                    str(error),
+                    date,
+                    currency.value,
+                    areas,
+                    market,
+                )
+                continue
+            except NordPoolError as error:
+                LOGGER.debug(
+                    "Error %s with date %s, currency %s, areas %s and market %s",
+                    str(error),
+                    date,
+                    currency.value,
+                    areas,
+                    market,
+                )
+                raise
             data.append(_data)
             raw_data[_data.raw["deliveryDateCET"]] = _data.raw
 
@@ -141,9 +164,10 @@ class NordPoolClient:
 
     async def _get(
         self, path: str, params: dict[str, Any], retry: int = 3
-    ) -> dict[str, Any]:
+    ) -> dict[str, Any] | None:
         """Make GET api call to Nord Pool api."""
         LOGGER.debug("Attempting get with path %s and parameters %s", path, params)
+        exception: Exception | None = None
         try:
             async with self._session.get(
                 path, params=params, timeout=self._timeout
@@ -151,24 +175,28 @@ class NordPoolClient:
                 return await self._response(resp)
         except NordPoolAuthenticationError as error:
             LOGGER.debug("Authentication error %s", str(error))
-            raise
+            exception = error
         except NordPoolEmptyResponseError as error:
             LOGGER.debug("Empty response error %s", str(error))
-            raise
+            # No raise for empty response
+            return None
         except NordPoolConnectionError as error:
             LOGGER.debug("Connection error %s", str(error))
-            raise
+            exception = error
         except NordPoolResponseError as error:
             LOGGER.debug("Response error %s", str(error))
-            raise
-        except Exception as error:
+            exception = error
+        except NordPoolError as error:
+            LOGGER.debug("General error %s", str(error))
+            exception = error
+
+        if retry > 0:
             LOGGER.debug(
-                "Retry %d on path %s from error %s", 4 - retry, path, str(error)
+                "Retry %d on path %s from error %s", 4 - retry, path, str(exception)
             )
-            if retry > 0:
-                await asyncio.sleep(7)
-                return await self._get(path, params, retry - 1)
-            raise NordPoolError from error
+            await asyncio.sleep(7)
+            return await self._get(path, params, retry - 1)
+        raise NordPoolError from exception
 
     async def _response(self, resp: ClientResponse) -> dict[str, Any]:
         """Return response from call."""
