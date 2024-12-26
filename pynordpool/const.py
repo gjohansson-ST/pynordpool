@@ -7,7 +7,7 @@ from enum import StrEnum
 
 API = "https://dataportal-api.nordpoolgroup.com/api"
 
-LOGGER = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__package__)
 
 DEFAULT_TIMEOUT = 8
 HTTP_AUTH_FAILED_STATUS_CODES = {401, 403}
