@@ -37,6 +37,8 @@ AREAS = {
     "SE2": "Sweden 2",
     "SE3": "Sweden 3",
     "SE4": "Sweden 4",
+    # Romania
+    "TEL": "Romania",
     # System
     "SYS": "System price",
 }
@@ -50,3 +52,4 @@ class Currency(StrEnum):
     NOK = "NOK"
     PLN = "PLN"
     SEK = "SEK"
+    RON = "RON"
