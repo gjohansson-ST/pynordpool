@@ -67,6 +67,7 @@ class NordPoolClient:
         currency: Currency,
         areas: list[str],
         market: str = "DayAhead",
+        resolution: str = "60",
     ) -> DeliveryPeriodsData:
         """Return info on multiple delivery periods data."""
         raw_data: dict[str, Any] = {}
@@ -74,26 +75,28 @@ class NordPoolClient:
         for date in dates:
             try:
                 _data = await self.async_get_delivery_period(
-                    date, currency, areas, market
+                    date, currency, areas, market, resolution
                 )
             except NordPoolEmptyResponseError as error:
                 LOGGER.debug(
-                    "Empty response error %s with date %s, currency %s, areas %s and market %s",
+                    "Empty response error %s with date %s, currency %s, areas %s and market %s with %s resolution",
                     str(error),
                     date,
                     currency.value,
                     areas,
                     market,
+                    resolution,
                 )
                 continue
             except NordPoolError as error:
                 LOGGER.debug(
-                    "Error %s with date %s, currency %s, areas %s and market %s",
+                    "Error %s with date %s, currency %s, areas %s and market %s with %s resolution",
                     str(error),
                     date,
                     currency.value,
                     areas,
                     market,
+                    resolution,
                 )
                 raise
             data.append(_data)
@@ -107,17 +110,20 @@ class NordPoolClient:
         currency: Currency,
         areas: list[str],
         market: str = "DayAhead",
+        resolution: str = "60",
     ) -> DeliveryPeriodData:
         """Return info on delivery period data."""
         _date = datetime.strftime(date, "%Y-%m-%d")
         _currency = currency.value
         _market = market
+        _resolution = resolution
         _areas = ",".join(areas)
         params = {
             "date": _date,
             "market": _market,
             "deliveryArea": _areas,
             "currency": _currency,
+            "resolutionInMinutes" : _resolution,
         }
         LOGGER.debug(
             "Retrieve prices from %s with params %s", API + "/DayAheadPrices", params
