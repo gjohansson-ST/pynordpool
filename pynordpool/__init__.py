@@ -28,6 +28,7 @@ from .model import (
     DeliveryPeriodData,
     DeliveryPeriodEntry,
     DeliveryPeriodsData,
+    PriceIndicesData,
 )
 from .util import parse_datetime
 
@@ -44,6 +45,7 @@ __all__ = [
     "NordPoolEmptyResponseError",
     "NordPoolError",
     "NordPoolResponseError",
+    "PriceIndicesData",
 ]
 
 
@@ -160,6 +162,56 @@ class NordPoolClient:
             currency=data["currency"],
             exchange_rate=data["exchangeRate"],
             area_average=area_averages,
+        )
+
+    async def async_get_price_indices(
+        self,
+        date: datetime,
+        currency: Currency,
+        areas: list[str],
+        market: str = "DayAhead",
+        resolution: int = 60,
+    ) -> PriceIndicesData:
+        """Return info on price indices data with set resolution."""
+        _date = datetime.strftime(date, "%Y-%m-%d")
+        _currency = currency.value
+        _market = market
+        _areas = ",".join(areas)
+        _resolution = str(resolution)
+        params = {
+            "date": _date,
+            "market": _market,
+            "indexNames": _areas,
+            "currency": _currency,
+            "resolutionInMinutes": _resolution,
+        }
+        LOGGER.debug(
+            "Retrieve prices from %s with params %s",
+            API + "/DayAheadPriceIndices",
+            params,
+        )
+        data = await self._get(API + "/DayAheadPriceIndices", params)
+
+        if not data or "multiIndexEntries" not in data:
+            raise NordPoolEmptyResponseError("Empty response")
+
+        entries = []
+        for entry in data["multiIndexEntries"]:
+            entries.append(
+                DeliveryPeriodEntry(
+                    start=await parse_datetime(entry["deliveryStart"]),
+                    end=await parse_datetime(entry["deliveryEnd"]),
+                    entry=entry["entryPerArea"],
+                )
+            )
+
+        return PriceIndicesData(
+            raw=data,
+            requested_date=data["deliveryDateCET"],
+            updated_at=await parse_datetime(data["updatedAt"]),
+            entries=entries,
+            currency=data["currency"],
+            resolution=data["resolutionInMinutes"],
         )
 
     async def _get(
