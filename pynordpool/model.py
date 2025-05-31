@@ -46,3 +46,15 @@ class DeliveryPeriodBlockPrices:
     start: datetime
     end: datetime
     average: dict[str, dict[str, float]]
+
+
+@dataclass
+class PriceIndicesData:
+    """Dataclass for Price indices data."""
+
+    raw: dict[str, Any]
+    requested_date: str
+    updated_at: datetime
+    entries: list[DeliveryPeriodEntry]
+    currency: str
+    resolution: int
