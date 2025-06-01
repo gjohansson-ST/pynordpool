@@ -38,7 +38,7 @@ AREAS = {
     "SE3": "Sweden 3",
     "SE4": "Sweden 4",
     # SSE (South East Europe)
-    "BG": "Sofia",
+    "BG": "Bulgaria",
     "TEL": "Romania",
     # System
     "SYS": "System price",
