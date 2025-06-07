@@ -37,7 +37,8 @@ AREAS = {
     "SE2": "Sweden 2",
     "SE3": "Sweden 3",
     "SE4": "Sweden 4",
-    # Romania
+    # SEE (South East Europe)
+    "BG": "Bulgaria",
     "TEL": "Romania",
     # System
     "SYS": "System price",
@@ -47,9 +48,10 @@ AREAS = {
 class Currency(StrEnum):
     """Currency picker."""
 
+    BGN = "BGN"
     DKK = "DKK"
     EUR = "EUR"
     NOK = "NOK"
     PLN = "PLN"
-    SEK = "SEK"
     RON = "RON"
+    SEK = "SEK"
