@@ -27,6 +27,7 @@ class DeliveryPeriodData:
     currency: str
     exchange_rate: float
     area_average: dict[str, float]
+    area_states: list[dict[str, Any]]
 
 
 @dataclass

@@ -162,6 +162,7 @@ class NordPoolClient:
             currency=data["currency"],
             exchange_rate=data["exchangeRate"],
             area_average=area_averages,
+            area_states=data["areaStates"],
         )
 
     async def async_get_price_indices(
