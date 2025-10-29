@@ -153,6 +153,11 @@ class NordPoolClient:
         for area_average in data["areaAverages"]:
             area_averages[area_average["areaCode"]] = area_average["price"]
 
+        prices_final = False
+        area_states = data.get("areaStates", [])
+        if area_states and isinstance(area_states[0], dict):
+            prices_final = area_states[0].get("state", "") == "Final"
+
         return DeliveryPeriodData(
             raw=data,
             requested_date=data["deliveryDateCET"],
@@ -163,6 +168,7 @@ class NordPoolClient:
             exchange_rate=data["exchangeRate"],
             area_average=area_averages,
             area_states=data["areaStates"],
+            prices_final=prices_final,
         )
 
     async def async_get_price_indices(
