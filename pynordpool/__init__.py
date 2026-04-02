@@ -60,7 +60,7 @@ class NordPoolClient:
         session: aiohttp.ClientSession or None to create a new session.
         timeout: Timeout for API calls. Default is 8 seconds.
         """
-        self._session = session if session else ClientSession()
+        self._session = session or ClientSession()
         self._timeout = ClientTimeout(total=timeout)
 
     async def async_get_delivery_periods(
