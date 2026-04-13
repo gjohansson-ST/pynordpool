@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import asyncio
-from datetime import datetime
+from datetime import date, datetime
 from typing import Any
 
 from aiohttp import ClientResponse, ClientSession, ClientTimeout
@@ -72,11 +72,11 @@ class NordPoolClient:
     ) -> DeliveryPeriodsData:
         """Return info on multiple delivery periods data."""
         raw_data: dict[str, Any] = {}
-        data: list[DeliveryPeriodData] = []
-        for date in dates:
+        data: dict[date, DeliveryPeriodData] = {}
+        for target_date in dates:
             try:
                 _data = await self.async_get_delivery_period(
-                    date, currency, areas, market
+                    target_date, currency, areas, market
                 )
             except NordPoolEmptyResponseError as error:
                 LOGGER.debug(
@@ -98,20 +98,20 @@ class NordPoolClient:
                     market,
                 )
                 raise
-            data.append(_data)
+            data[target_date.date()] = _data
             raw_data[_data.raw["deliveryDateCET"]] = _data.raw
 
         return DeliveryPeriodsData(raw=raw_data, entries=data)
 
     async def async_get_delivery_period(
         self,
-        date: datetime,
+        target_date: datetime,
         currency: Currency,
         areas: list[str],
         market: str = "DayAhead",
     ) -> DeliveryPeriodData:
         """Return info on delivery period data."""
-        _date = datetime.strftime(date, "%Y-%m-%d")
+        _date = datetime.strftime(target_date, "%Y-%m-%d")
         _currency = currency.value
         _market = market
         _areas = ",".join(areas)
@@ -173,14 +173,14 @@ class NordPoolClient:
 
     async def async_get_price_indices(
         self,
-        date: datetime,
+        target_date: datetime,
         currency: Currency,
         areas: list[str],
         market: str = "DayAhead",
         resolution: int = 60,
     ) -> PriceIndicesData:
         """Return info on price indices data with set resolution."""
-        _date = datetime.strftime(date, "%Y-%m-%d")
+        _date = datetime.strftime(target_date, "%Y-%m-%d")
         _currency = currency.value
         _market = market
         _areas = ",".join(areas)
