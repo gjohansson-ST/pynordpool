@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import date, datetime
 from typing import Any
 
 
@@ -12,7 +12,7 @@ class DeliveryPeriodsData:
     """Dataclass for multiple Delivery Periods data."""
 
     raw: dict[str, Any]
-    entries: list[DeliveryPeriodData]
+    entries: dict[date, DeliveryPeriodData]
 
 
 @dataclass
