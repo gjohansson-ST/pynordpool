@@ -45,7 +45,7 @@ pytest-cov = "7.1.0"
 ruff = "0.16.9"
 safety = "3.8.1"
 yamllint = "1.38.0"
-syrupy = "6.0.0"
+syrupy = "6.1.1"
 
 [tool.poetry.urls]
 "Bug Tracker" = "https://github.com/gjohansson-ST/pynordpool/issues"
