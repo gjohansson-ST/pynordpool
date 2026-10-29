@@ -11,6 +11,7 @@
 [![Discord](https://img.shields.io/discord/872446427664625664?style=for-the-badge&label=Discord&cacheSeconds=3600)](https://discord.gg/EG7cWFQMGW)
 
 # pynordpool
+
 python module for communicating with [Nord Pool](https://data.nordpoolgroup.com/auction/day-ahead/prices)
 
 ## Code example
